@@ -1,0 +1,22 @@
+# mern-auth-app/frontend/Dockerfile.dev
+FROM node:20-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+# Using --force or --legacy-peer-deps might be needed depending on peer dependency issues
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port your Vite development server runs on (typically 5173 or 3000)
+# Check your vite.config.js for the exact port if not 3000
+EXPOSE 3000
+
+# Command to run the frontend development server (Vite)
+CMD ["npm", "run", "dev"]

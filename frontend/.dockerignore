@@ -1,0 +1,5 @@
+# mern-auth-app/frontend/.dockerignore
+node_modules
+.env
+build
+dist

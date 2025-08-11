@@ -39,10 +39,10 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: frontend
     ports:
-      - "3000:80" # Map host port 3000 to container port 80 (Nginx default for built app)
+      - "5173:5173" # Map host port 3000 to container port 80 (Nginx default for built app)
     environment:
       # VITE_APP_API_URL points to the backend service.
       # For the frontend running in a *browser* on your host, it needs to
@@ -53,15 +53,15 @@ services:
       - backend # Ensure backend starts before the frontend
     networks:
       - mern-network
-    # volumes:
-    #   # Mount the frontend code for live development. This is for when you're actively developing.
-    #   # For production, you'd remove this volume and rely on the build step in the Dockerfile.
-    #   - ./frontend:/app
-    #   # Exclude node_modules from the host mount to prevent issues.
-    #   - /app/node_modules
-    # # Command to run the frontend development server (Vite).
-    # # This is for development; for production, Nginx will serve the static build.
-    # command: npm run dev -- --host
+    volumes:
+      # Mount the frontend code for live development. This is for when you're actively developing.
+      # For production, you'd remove this volume and rely on the build step in the Dockerfile.
+      - ./frontend:/app
+      # Exclude node_modules from the host mount to prevent issues.
+      - /app/node_modules
+    # Command to run the frontend development server (Vite).
+    # This is for development; for production, Nginx will serve the static build.
+    command: npm run dev -- --host
 volumes:
   mongo_data: # Define a named volume for persistent MongoDB data
 
